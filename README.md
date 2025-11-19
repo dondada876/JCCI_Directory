@@ -1,48 +1,71 @@
-# Jamaica Connect - Directory & News Hub
+# JCCI Global Directory & Hurricane Melissa Relief System
 
-A comprehensive online platform connecting the world to Jamaica through a business directory and news hub.
+A comprehensive platform serving the 6 million-strong Jamaican diaspora worldwide, combining business networking, disaster relief coordination, and transparent fund management through "radical transparency" principles.
 
-## Overview
+## 🌟 Overview
 
-Jamaica Connect is a modern web application built with Next.js that serves as a centralized platform for discovering Jamaican businesses and staying updated with the latest news from the island. The platform features an intuitive interface, powerful search capabilities, and responsive design for seamless access across all devices.
+The JCCI platform integrates three powerful systems:
+1. **Global Business Directory** - Connecting diaspora-owned businesses worldwide
+2. **Hurricane Melissa Relief System** - Coordinating aid for 400,000+ affected Jamaicans
+3. **Transparent Donation Platform** - Real-time tracking of every dollar raised and spent
 
-## Features
+## ✨ Core Features
 
-### Business Directory
-- **Comprehensive Listings**: Browse businesses across multiple categories including Tourism, Restaurants, Services, Culture, Agriculture, Healthcare, Technology, and Education
-- **Advanced Search**: Search businesses by name, description, or location
-- **Category Filtering**: Filter businesses by specific categories for targeted browsing
-- **Detailed Business Pages**: Each business has a dedicated page with full contact information, descriptions, and related businesses
-- **Featured Businesses**: Highlighting premium and verified business listings
+### 🏢 Business Directory (Coming Soon)
+- **Global Listings**: Jamaican-owned businesses across 50+ countries
+- **Advanced Search**: Full-text search with geospatial filtering
+- **Reviews & Ratings**: Community-driven business verification
+- **Map View**: Interactive maps with location-based search
+- **Business Profiles**: Comprehensive information with social media integration
 
-### News Hub
-- **Latest News**: Stay updated with current events and stories from Jamaica
-- **Multiple Categories**: News organized across Tourism, Business, Technology, Culture, Sports, and Environment
-- **Article Search**: Full-text search across news articles
-- **Featured Stories**: Highlighted important and trending news
-- **Related Articles**: Discover similar content through intelligent article recommendations
+### 🆘 Hurricane Melissa Relief System
+- **Relief Claim Submission** (`/relief`): Multi-step form with photo upload for damage documentation
+- **Claim Tracking** (`/relief/track`): Real-time status updates with unique claim numbers
+- **Partner Dashboard** (`/relief/admin`): Verification and approval workflow for partner organizations
+- **SMS Notifications**: Automated updates via Twilio integration (configurable)
+- **Priority Management**: Urgent, high, standard, and low priority classification
 
-### Additional Features
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Fast Performance**: Built with Next.js for optimal loading speeds and SEO
-- **Modern UI/UX**: Clean, intuitive interface using Tailwind CSS
-- **Jamaica-themed Branding**: Custom color scheme reflecting Jamaica's national colors
+### 💰 Donation & Transparency System
+- **Stripe Integration** (`/donate`): Secure payment processing with multiple amount options
+- **Real-time Dashboard** (`/transparency`): Live donation statistics and fund allocation
+- **100% Transparency**: Every transaction tracked and publicly visible
+- **Tax Receipts**: Automatic generation for all donors
+- **Interactive Charts**: Visual breakdown of fund usage
 
-## Technology Stack
+### 🔐 Authentication & User Management
+- **User Registration**: Email/password authentication via Supabase Auth
+- **User Roles**: Member, Business Owner, Partner, Admin
+- **Profile Management** (`/account`): Update personal information and preferences
+- **Protected Routes**: Role-based access control
+
+### 📰 News Hub
+- **Latest News**: Current events and stories from Jamaica
+- **Category Organization**: Tourism, Business, Technology, Culture, Sports, Environment
+- **Article Search**: Full-text search across all articles
+- **Featured Stories**: Highlighted trending news
+
+## 🛠️ Technology Stack
 
 - **Framework**: Next.js 15 (React 18)
 - **Language**: TypeScript
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: Supabase Auth
+- **Payments**: Stripe
 - **Styling**: Tailwind CSS
-- **Image Optimization**: Next.js Image component
-- **Routing**: Next.js App Router
-- **Deployment Ready**: Optimized for Vercel, Netlify, or any Node.js hosting
+- **Charts**: Recharts
+- **Real-time**: Supabase Realtime subscriptions
+- **Geospatial**: PostGIS extensions
 
-## Getting Started
+## 🚀 Quick Start
+
+For detailed setup instructions, see [SETUP.md](./SETUP.md)
 
 ### Prerequisites
 
 - Node.js 18.x or higher
 - npm or yarn package manager
+- Supabase account (free tier available)
+- Stripe account (test mode for development)
 
 ### Installation
 
@@ -57,12 +80,62 @@ cd JCCI_Directory
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+# Edit .env.local with your Supabase and Stripe credentials
+```
+
+4. Set up Supabase database:
+- Create a new Supabase project
+- Run the SQL schema from `supabase/schema.sql` in Supabase SQL Editor
+
+5. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+6. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## 📁 Project Structure
+
+```
+JCCI_Directory/
+├── app/
+│   ├── account/           # User account management
+│   ├── api/               # API routes (Stripe, webhooks)
+│   ├── donate/            # Donation system
+│   ├── relief/            # Relief claims system
+│   │   ├── admin/         # Partner verification dashboard
+│   │   └── track/         # Claim tracking
+│   ├── transparency/      # Public transparency dashboard
+│   ├── directory/         # Business directory
+│   └── news/              # News hub
+├── components/            # Reusable React components
+├── lib/                   # Utilities and configurations
+│   ├── supabase.ts        # Supabase client
+│   ├── stripe.ts          # Stripe configuration
+│   ├── auth-context.tsx   # Authentication context
+│   └── types.ts           # TypeScript definitions
+├── supabase/
+│   └── schema.sql         # Complete database schema
+├── SETUP.md               # Detailed setup guide
+└── .env.example           # Environment variables template
+```
+
+## 🗄️ Database Schema
+
+The platform uses Supabase (PostgreSQL) with the following key tables:
+
+- **businesses** - Business directory listings with full-text search
+- **business_reviews** - Customer reviews and ratings
+- **relief_claims** - Hurricane Melissa relief claim records
+- **donations** - All donation transactions with Stripe integration
+- **campaigns** - Fundraising campaigns (e.g., Hurricane Melissa Relief)
+- **fund_allocations** - Transparent fund tracking and allocation
+- **user_profiles** - Extended user information and roles
+
+Full schema with indexes, RLS policies, and functions available in `supabase/schema.sql`
 
 ### Build for Production
 

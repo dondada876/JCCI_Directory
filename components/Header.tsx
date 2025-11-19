@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
+import AuthModal from "./AuthModal";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { user, profile } = useAuth();
 
   return (
     <header className="bg-jamaica-black text-white shadow-lg sticky top-0 z-50">
@@ -18,7 +22,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <Link href="/" className="hover:text-jamaica-gold transition-colors">
               Home
             </Link>
@@ -28,12 +32,31 @@ export default function Header() {
             <Link href="/news" className="hover:text-jamaica-gold transition-colors">
               News
             </Link>
-            <Link href="/about" className="hover:text-jamaica-gold transition-colors">
-              About Jamaica
+            <Link href="/relief" className="hover:text-jamaica-gold transition-colors">
+              Relief Claims
             </Link>
-            <Link href="/contact" className="hover:text-jamaica-gold transition-colors">
-              Contact
+            <Link href="/donate" className="hover:text-jamaica-gold transition-colors">
+              Donate
             </Link>
+            <Link href="/transparency" className="hover:text-jamaica-gold transition-colors">
+              Transparency
+            </Link>
+
+            {user ? (
+              <Link
+                href="/account"
+                className="px-4 py-2 bg-jamaica-green hover:bg-[#008030] rounded-md transition-colors"
+              >
+                {profile?.display_name || 'Account'}
+              </Link>
+            ) : (
+              <button
+                onClick={() => setIsAuthModalOpen(true)}
+                className="px-4 py-2 bg-jamaica-green hover:bg-[#008030] rounded-md transition-colors"
+              >
+                Sign In
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -92,22 +115,53 @@ export default function Header() {
               News
             </Link>
             <Link
-              href="/about"
+              href="/relief"
               className="block hover:text-jamaica-gold transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              About Jamaica
+              Relief Claims
             </Link>
             <Link
-              href="/contact"
+              href="/donate"
               className="block hover:text-jamaica-gold transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Contact
+              Donate
             </Link>
+            <Link
+              href="/transparency"
+              className="block hover:text-jamaica-gold transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Transparency
+            </Link>
+            {user ? (
+              <Link
+                href="/account"
+                className="block hover:text-jamaica-gold transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Account
+              </Link>
+            ) : (
+              <button
+                onClick={() => {
+                  setIsAuthModalOpen(true);
+                  setIsMenuOpen(false);
+                }}
+                className="block w-full text-left hover:text-jamaica-gold transition-colors"
+              >
+                Sign In
+              </button>
+            )}
           </div>
         )}
       </nav>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </header>
   );
 }

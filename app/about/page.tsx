@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -193,18 +194,18 @@ export default function AboutPage() {
             latest news?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
+            <Link
               href="/directory"
               className="bg-jamaica-gold text-jamaica-black px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition-colors"
             >
               Browse Directory
-            </a>
-            <a
+            </Link>
+            <Link
               href="/news"
               className="bg-white text-jamaica-green px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors"
             >
               Read News
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -9,12 +9,13 @@ export function generateStaticParams() {
   }));
 }
 
-export default function NewsArticlePage({
+export default async function NewsArticlePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const article = newsArticles.find((a) => a.id === params.id);
+  const { id } = await params;
+  const article = newsArticles.find((a) => a.id === id);
 
   if (!article) {
     notFound();

@@ -9,12 +9,13 @@ export function generateStaticParams() {
   }));
 }
 
-export default function BusinessDetailPage({
+export default async function BusinessDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const business = businesses.find((b) => b.id === params.id);
+  const { id } = await params;
+  const business = businesses.find((b) => b.id === id);
 
   if (!business) {
     notFound();
